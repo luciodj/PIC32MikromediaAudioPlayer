@@ -34,14 +34,14 @@
 ********************************************************************/
 #define	GetPeripheralClock()		(GetSystemClock()/(1<<OSCCONbits.PBDIV))
 /*********************************************************************/
-
+#define GetInstructionClock()          (GetSystemClock())
 /*********************************************************************
 * Overview:
 *   Graphics Panel on the MikroE- PIC32 MX4 MMB Board 
 *                                        
 ********************************************************************/
 #define GRAPHICS_HARDWARE_PLATFORM      PIC32MX4_MMB
-#define DISPLAY_CONTROLLER              HX8347D
+
 /*********************************************************************
 * Overview: Horizontal and vertical display resolution
 *                  (from the glass datasheet).
@@ -53,11 +53,13 @@
 *			color depths are valid.
 *
 ********************************************************************/
-#define COLOR_DEPTH					16
+#define DISPLAY_CONTROLLER              HX8347D
 #define USE_GFX_PMP
-#define DISPLAY_CONTROLLER_SETUP_Hz                     20000000L
+#define GFX_USE_DISPLAY_CONTROLLER_HX8347D
 #define USE_16BIT_PMP    
-
+#define PMP_DATA_SETUP_TIME             1
+#define PMP_DATA_WAIT_TIME              1
+#define PMP_DATA_HOLD_TIME              1
 /*********************************************************************
 * Overview: Image orientation (can be 0, 90, 180, 270 degrees).
 *********************************************************************/
@@ -98,6 +100,8 @@
 #define BL_TRIS_BIT         _TRISD2
 #define BL_LAT_BIT          _LATD2
 
+#define DisplayBacklightOff() BL_LAT_BIT = 0;
+#define DisplayBacklightConfig() _TRISD2 = 0;
 
 #define BacklightOn()       BL_LAT_BIT = 1
 #define BacklightOff()      BL_LAT_BIT = 0
@@ -129,7 +133,7 @@
 
 /*********************************************************************
 * IOS FOR SERIAL FLASH 
-*********************************************************************/
+\*********************************************************************/
 #define CS_FLASH_TRIS_BIT   _TRISC2
 #define CS_FLASH_LAT_BIT    _LATC2
 
