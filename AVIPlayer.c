@@ -355,7 +355,7 @@ int PlayAVI( char *fname)
             // 8.2.2 there is time
             else 
             {   // 1. reposition cursor to top left
-                CS_LAT_BIT = 0;
+                DisplayEnable(); //CS_LAT_BIT = 0;
 #ifndef DOUBLE_H
                 SetAddress( 80, 60 );   
 #else
@@ -366,7 +366,7 @@ int PlayAVI( char *fname)
     #endif
 #endif
 
-                RS_LAT_BIT = 1;             // data from here on...
+                DisplaySetData(); //RS_LAT_BIT = 1;             // data from here on...
                    
                 // 2. for each line
                 for( j=0; j<V_MAX; j++)
@@ -403,7 +403,7 @@ int PlayAVI( char *fname)
                 }  // for each line
                 
                 // deselect display      
-                CS_LAT_BIT = 1;            
+                DisplayDisable();  //CS_LAT_BIT = 1;
                 
             } // paint a frame
             

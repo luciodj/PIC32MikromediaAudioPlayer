@@ -41,7 +41,7 @@
 *                                        
 ********************************************************************/
 #define GRAPHICS_HARDWARE_PLATFORM      PIC32MX4_MMB
-#define DISPLAY_CONTROLLER				HX8347D
+#define DISPLAY_CONTROLLER              HX8347D
 /*********************************************************************
 * Overview: Horizontal and vertical display resolution
 *                  (from the glass datasheet).
@@ -53,7 +53,9 @@
 *			color depths are valid.
 *
 ********************************************************************/
-#define COLOR_DEPTH						16
+#define COLOR_DEPTH					16
+#define USE_GFX_PMP
+#define DISPLAY_CONTROLLER_SETUP_Hz                     20000000L
 #define USE_16BIT_PMP    
 
 /*********************************************************************
@@ -64,18 +66,33 @@
 /*********************************************************************
 * IOS FOR THE DISPLAY CONTROLLER
 *********************************************************************/
+    // Definitions for reset pin
+#define DisplayResetConfig()        TRISCCLR = _TRISC_TRISC1_MASK
+#define DisplayResetEnable()        LATCCLR = _LATC_LATC1_MASK
+#define DisplayResetDisable()       LATCSET = _LATC_LATC1_MASK
+
+    // Definitions for RS pin
+#define DisplayCmdDataConfig()      TRISCCLR = _TRISB_TRISB15_MASK
+#define DisplaySetCommand()         LATCCLR = _LATB_LATB15_MASK
+#define DisplaySetData()            LATCSET = _LATB_LATB15_MASK
+
+    // Definitions for CS pin
+#define DisplayConfig()             TRISDCLR = _TRISF_TRISF12_MASK
+#define DisplayEnable()             LATDCLR = _LATF_LATF12_MASK
+#define DisplayDisable()            LATDSET = _LATF_LATF12_MASK
+
 
 // Definitions for reset pin
-#define RST_TRIS_BIT        _TRISC1
-#define RST_LAT_BIT         _LATC1
+//#define RST_TRIS_BIT        _TRISC1
+//#define RST_LAT_BIT         _LATC1
 
 // Definitions for RS pin
-#define RS_TRIS_BIT         _TRISB15
-#define RS_LAT_BIT          _LATB15
+//#define RS_TRIS_BIT         _TRISB15
+//#define RS_LAT_BIT          _LATB15
 
 // Definitions for CS pin
-#define CS_TRIS_BIT         _TRISF12
-#define CS_LAT_BIT          _LATF12
+//#define CS_TRIS_BIT         _TRISF12
+//#define CS_LAT_BIT          _LATF12
 
 // Definitions for Backlight power pin 
 #define BL_TRIS_BIT         _TRISD2
