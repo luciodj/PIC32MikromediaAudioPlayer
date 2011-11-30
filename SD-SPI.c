@@ -443,10 +443,10 @@ MMC_RESPONSE SendMMCCmd(BYTE cmd, DWORD address)
 
     if (sdmmc_cmdtable[cmd].responsetype == R7)
     {
-        response.r7.bytewise._returnVal = (DWORD)MDD_SDSPI_ReadMedia() << 24;
-        response.r7.bytewise._returnVal += (DWORD)MDD_SDSPI_ReadMedia() << 16;
-        response.r7.bytewise._returnVal += (DWORD)MDD_SDSPI_ReadMedia() << 8;
-        response.r7.bytewise._returnVal += (DWORD)MDD_SDSPI_ReadMedia();
+        response.r7.bytewise.argument._returnVal = (DWORD)MDD_SDSPI_ReadMedia() << 24;
+        response.r7.bytewise.argument._returnVal += (DWORD)MDD_SDSPI_ReadMedia() << 16;
+        response.r7.bytewise.argument._returnVal += (DWORD)MDD_SDSPI_ReadMedia() << 8;
+        response.r7.bytewise.argument._returnVal += (DWORD)MDD_SDSPI_ReadMedia();
     }
 
     mSend8ClkCycles();                      //Required clocking (see spec)
@@ -601,7 +601,7 @@ BYTE MDD_SDSPI_SectorRead(DWORD sector_addr, BYTE* buffer)
     MMC_RESPONSE    response;
     BYTE data_token;
     BYTE status = TRUE;
-    DWORD   new_addr;
+    DWORD   new_addr, u;
    
 //   _RA2 = 1;
     // send the cmd
@@ -1284,7 +1284,7 @@ MEDIA_INFORMATION *  MDD_SDSPI_MediaInitialize(void)
 	    }
 	
 	    response = SendMMCCmd(SEND_IF_COND, 0x1AA);
-	    if (((response.r7.bytewise._returnVal & 0xFFF) == 0x1AA) && (!response.r7.bitwise.bits.ILLEGAL_CMD))
+	    if (((response.r7.bytewise.argument._returnVal & 0xFFF) == 0x1AA) && (!response.r7.bitwise.bits.ILLEGAL_CMD))
 		{
 	        timeout = 0xFFF;
 	        do
@@ -1293,7 +1293,7 @@ MEDIA_INFORMATION *  MDD_SDSPI_MediaInitialize(void)
 	            timeout--;
 	        }while(response.r1._byte != 0x00 && timeout != 0);
 			response = SendMMCCmd(READ_OCR, 0x0);
-	        if (((response.r7.bytewise._returnVal & 0xC0000000) == 0xC0000000) && (response.r7.bytewise._byte == 0))
+	        if (((response.r7.bytewise.argument._returnVal & 0xC0000000) == 0xC0000000) && (response.r7.bytewise._byte == 0))
 			{
 	        	gSDMode = SD_MODE_HC;
 			}

@@ -19,8 +19,9 @@
 #pragma config FWDTEN=OFF, CP=OFF, BWP=OFF
 
 #include <plib.h>
-#include "Graphics\Graphics.h"
-#include "MDD File System\FSIO.h"
+#include "Graphics/Graphics.h"
+#include "graphics/gfxpmp.h"
+#include "MDD File System/FSIO.h"
 
 #include "MMB.h"
 #include "LCDTerminal.h"
@@ -378,12 +379,11 @@ int PlayAVI( char *fname)
                     pV = &vbuffer[0]; i = H_MAX;
                     while( i--) {
 #ifdef DOUBLE_H
-//                        if ( doubleH-1)     // horizontal doubling
-                        PMDIN1 = *pV;;              
-                        PMPWaitBusy();
+                        DeviceWrite( *pV);  //PMDIN1 = *pV;;
+                                            //PMPWaitBusy();
 #endif
-                        PMDIN1 = *pV++;
-                        PMPWaitBusy();
+                        DeviceWrite( *pV++);//PMDIN1 = *pV;;
+                                            //PMPWaitBusy();
                     }
 
 #ifdef DOUBLE_V
@@ -392,12 +392,11 @@ int PlayAVI( char *fname)
                     pV = &vbuffer[0]; i = H_MAX;
                     while( i--) {
 #ifdef DOUBLE_H
-//                        if ( doubleH-1)     // horizontal doubling
-                        PMDIN1 = *pV;;              
-                        PMPWaitBusy();
+                        DeviceWrite( *pV);  //PMDIN1 = *pV;;
+                                            //PMPWaitBusy();
 #endif
-                        PMDIN1 = *pV++;
-                        PMPWaitBusy();
+                        DeviceWrite( *pV++);//PMDIN1 = *pV;;
+                                            //PMPWaitBusy();
                     }
 #endif
                 }  // for each line

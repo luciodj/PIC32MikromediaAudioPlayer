@@ -11,6 +11,9 @@
 #ifndef _GRAPHICSCONFIG_H
 #define _GRAPHICSCONFIG_H
 
+#define COLOR_DEPTH                     16
+
+
 #define LCD_BACK    BLACK
 #define LCD_FORE    BRIGHTRED
 
