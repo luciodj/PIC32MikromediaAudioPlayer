@@ -1,19 +1,21 @@
 /*********************************************************************
  *
- *	MikroE PIC32MX4 MMB Hardware specific definitions
+ *	MikroE PIC32MX4 uMMB Hardware specific definitions
  *
  *********************************************************************
  *
  * Author               Date		Comment
  *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  * Lucio Di Jasio       12/08/09    MikroE PIC32MX4 MMB 
+ * LDJ                  12/01/11    Mikroe uMMB 
+ * LDJ                  12/01/11    Graphics Lib 3.02 compatible
  ********************************************************************/
 #ifndef __HARDWARE_PROFILE_H
 #define __HARDWARE_PROFILE_H
 
-#define PIC32MX4_MMB    400
+#define PIC32MX4_uMMB    401
 
-    #include <plib.h>
+#include <plib.h>
 
 /*********************************************************************
 * GetSystemClock() returns system clock frequency.
@@ -48,18 +50,15 @@
 *********************************************************************/
 #define DISP_HOR_RESOLUTION				240
 #define DISP_VER_RESOLUTION				320
-/*********************************************************************
-* Overview: Defines color depth. The 1,2,4,8,16 bit per pixel 
-*			color depths are valid.
-*
-********************************************************************/
-#define DISPLAY_CONTROLLER              HX8347D
-#define USE_GFX_PMP
+
+// display type
 #define GFX_USE_DISPLAY_CONTROLLER_HX8347D
+// interface
+#define USE_GFX_PMP
 #define USE_16BIT_PMP    
-#define PMP_DATA_SETUP_TIME             1
-#define PMP_DATA_WAIT_TIME              1
-#define PMP_DATA_HOLD_TIME              1
+#define PMP_DATA_SETUP_TIME             (30)
+#define PMP_DATA_WAIT_TIME              (30)
+#define PMP_DATA_HOLD_TIME              (30)
 /*********************************************************************
 * Overview: Image orientation (can be 0, 90, 180, 270 degrees).
 *********************************************************************/
@@ -74,27 +73,15 @@
 #define DisplayResetDisable()       LATCSET = _LATC_LATC1_MASK
 
     // Definitions for RS pin
-#define DisplayCmdDataConfig()      TRISCCLR = _TRISB_TRISB15_MASK
-#define DisplaySetCommand()         LATCCLR = _LATB_LATB15_MASK
-#define DisplaySetData()            LATCSET = _LATB_LATB15_MASK
+#define DisplayCmdDataConfig()      TRISBCLR = _TRISB_TRISB15_MASK
+#define DisplaySetCommand()         LATBCLR = _LATB_LATB15_MASK
+#define DisplaySetData()            LATBSET = _LATB_LATB15_MASK
 
     // Definitions for CS pin
-#define DisplayConfig()             TRISDCLR = _TRISF_TRISF12_MASK
-#define DisplayEnable()             LATDCLR = _LATF_LATF12_MASK
-#define DisplayDisable()            LATDSET = _LATF_LATF12_MASK
+#define DisplayConfig()             TRISFCLR = _TRISF_TRISF12_MASK
+#define DisplayEnable()             LATFCLR = _LATF_LATF12_MASK
+#define DisplayDisable()            LATFSET = _LATF_LATF12_MASK
 
-
-// Definitions for reset pin
-//#define RST_TRIS_BIT        _TRISC1
-//#define RST_LAT_BIT         _LATC1
-
-// Definitions for RS pin
-//#define RS_TRIS_BIT         _TRISB15
-//#define RS_LAT_BIT          _LATB15
-
-// Definitions for CS pin
-//#define CS_TRIS_BIT         _TRISF12
-//#define CS_LAT_BIT          _LATF12
 
 // Definitions for Backlight power pin 
 #define BL_TRIS_BIT         _TRISD2
@@ -209,7 +196,7 @@
     #define SPI_START_CFG_2     (SPI_ENABLE)
 
     // Define the SPI frequency
-    #define SPI_FREQUENCY			(20000000)
+    #define SPI_FREQUENCY	(20000000)
 
 
     // Description: SD-SPI Chip Select Output bit
